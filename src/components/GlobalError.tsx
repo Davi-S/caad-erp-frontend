@@ -1,24 +1,35 @@
 import { useRouteError, useNavigate } from "react-router-dom"
-import { StatusScreen } from "./StatusScreen"
+import { Button, Center, Text, Stack } from "@mantine/core"
+import { AlertTriangle } from "lucide-react"
+import { ScreenShell } from "./ScreenShell"
 
 export function GlobalError() {
     const error = useRouteError()
     const navigate = useNavigate()
 
-    let errorMessage = "An unexpected error occurred"
-    if (error instanceof Error) {
-        errorMessage = error.message
-    } else if (typeof error === "string") {
-        errorMessage = error
-    }
+    const errorMessage = error instanceof Error
+        ? error.message
+        : typeof error === "string"
+            ? error
+            : "An unexpected error occurred"
 
     return (
-        <div className="w-full min-h-svh font-body bg-paper bg-[radial-gradient(circle,var(--color-paperLine)_1px,transparent_1px)] bg-size[18px_18px]">
-            <StatusScreen
-                mode="error"
-                message={errorMessage}
-                onRetry={() => navigate(".", { replace: true })}
-            />
-        </div>
+        <ScreenShell>
+            <Center style={{ minHeight: "100svh" }}>
+                <Stack align="center">
+                    <AlertTriangle />
+                    <Stack align="center">
+                        <Text>Erro</Text>
+                        <Text c="dimmed" ta="center">
+                            {errorMessage}
+                        </Text>
+                    </Stack>
+
+                    <Button onClick={() => navigate(".", { replace: true })}>
+                        Tentar de novo
+                    </Button>
+                </Stack>
+            </Center>
+        </ScreenShell>
     )
 }
