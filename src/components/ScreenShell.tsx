@@ -6,8 +6,14 @@ export function ScreenShell({ children }: { children: React.ReactNode }) {
             px="xl"
             py="xl"
             h="100svh"
+            bg="gray.0"
             display="flex"
-            style={{ flexDirection: 'column' }}
+            style={{
+                flexDirection: 'column',
+                overflow: 'hidden',
+                paddingTop: 'max(var(--mantine-spacing-xl), env(safe-area-inset-top))',
+                paddingBottom: 'max(var(--mantine-spacing-xl), env(safe-area-inset-bottom))',
+            }}
         >
             {children}
         </Container>
