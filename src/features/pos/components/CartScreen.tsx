@@ -3,7 +3,7 @@ import {
     SimpleGrid, Stack, Text, Title, ScrollArea,
     Divider, Center
 } from "@mantine/core"
-import { Plus, Minus, ArrowLeft, Pencil } from "lucide-react"
+import { Plus, Minus, ArrowLeft } from "lucide-react"
 import { ScreenShell } from "@/components/ScreenShell"
 import { brl } from "@/helpers"
 import type { Salesman, Products, Stock } from "@/types"
@@ -34,16 +34,13 @@ export function CartScreen({
     return (
         <ScreenShell>
             {/* Header */}
-            <Group justify="space-between">
+            <Group>
                 <ActionIcon onClick={onBack}>
                     <ArrowLeft />
                 </ActionIcon>
                 <Title order={1} size="h5">
                     Venda de {salesman?.salesman_name}
                 </Title>
-                <ActionIcon onClick={onBack}>
-                    <Pencil size={18} />
-                </ActionIcon>
             </Group>
 
             {/* Middle Section */}
