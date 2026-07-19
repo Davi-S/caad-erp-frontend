@@ -96,6 +96,9 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                                 color="teal"
                                 fullWidth
                                 mt="sm"
+                                styles={{
+                                    root: { display: "grid", gridTemplateColumns: `repeat(${METHOD_OPTIONS.length}, 1fr)` },
+                                }}
                             />
 
                             <Paper withBorder radius="md" p="md" mt="sm" w="100%" mih={180} style={{ borderStyle: "dashed" }}>
