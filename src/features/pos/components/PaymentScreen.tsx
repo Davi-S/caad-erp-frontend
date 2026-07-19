@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import {
     ActionIcon, Alert, Badge, Button, Center,
-    CopyButton, Divider, Group, Paper, ScrollArea, SegmentedControl,
+    Group, Paper, ScrollArea, SegmentedControl,
     Stack, Text, Title
 } from "@mantine/core"
 import { Check, Copy, ArrowLeft, AlertTriangle, QrCode, Banknote, CreditCard, MoreHorizontal } from "lucide-react"

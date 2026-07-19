@@ -1,6 +1,6 @@
 import { useState } from "react"
 import {
-    Avatar, Badge, Button, Center, Group,
+    Button, Center, Group,
     ScrollArea, Stack, Text, ThemeIcon, Title, UnstyledButton
 } from "@mantine/core"
 import { Check, Users } from "lucide-react"
