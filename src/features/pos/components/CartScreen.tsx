@@ -34,7 +34,7 @@ export function CartScreen({
         <ScreenShell>
             {/* Header */}
             <Group wrap="nowrap">
-                <ActionIcon onClick={onBack} variant="subtle" color="dark" size="lg">
+                <ActionIcon onClick={onBack} variant="subtle" size="lg">
                     <ArrowLeft />
                 </ActionIcon>
                 <Stack gap={0}>
@@ -48,78 +48,79 @@ export function CartScreen({
             </Group>
 
             {/* Middle Section */}
-            <ScrollArea type="scroll" style={{ flex: 1, minHeight: 0 }}>
-                <Stack py="lg">
-                    <Stack gap="sm">
-                        <Text size="xs" fw={600} tt="uppercase" c="dimmed" style={{ letterSpacing: 1 }}>
-                            Toque para adicionar
-                        </Text>
-                        <SimpleGrid cols={3} spacing="sm">
-                            {products.map((product) => {
-                                const available = availableFor(product.product_id)
-                                const soldOut = available !== undefined && available <= 0
-                                const quantity = cart[product.product_id] || 0
+            <Stack style={{ flex: 1, minHeight: 0 }} py="lg">
+                <Stack gap="sm">
+                    <Text size="xs" fw={600} tt="uppercase" c="dimmed" style={{ letterSpacing: 1 }}>
+                        Toque para adicionar
+                    </Text>
+                    <SimpleGrid cols={3} spacing="sm">
+                        {products.map((product) => {
+                            const available = availableFor(product.product_id)
+                            const soldOut = available !== undefined && available <= 0
+                            const quantity = cart[product.product_id] || 0
 
-                                return (
-                                    <UnstyledButton
-                                        key={product.product_id}
-                                        onClick={() => quantity > 0 ? removeItem(product.product_id) : inc(product.product_id)}
-                                        disabled={soldOut}
-                                        p="sm"
-                                        style={(theme) => ({
-                                            position: "relative",
-                                            borderRadius: theme.radius.md,
-                                            border: `2px solid ${quantity > 0 ? theme.colors.teal[6] : theme.colors.gray[3]}`,
-                                            backgroundColor: soldOut
-                                                ? theme.colors.gray[1]
-                                                : quantity > 0
-                                                    ? theme.colors.teal[0]
-                                                    : theme.white,
-                                            opacity: soldOut ? 0.5 : 1,
-                                            textAlign: "center",
-                                        })}
-                                    >
-                                        {quantity > 0 && (
-                                            <Badge
-                                                color="teal"
-                                                variant="filled"
-                                                radius="xl"
-                                                size="sm"
-                                                style={{ position: "absolute", top: -8, right: -8, transform: "rotate(-8deg)" }}
-                                            >
-                                                {quantity}x
-                                            </Badge>
+                            return (
+                                <UnstyledButton
+                                    key={product.product_id}
+                                    onClick={() => quantity > 0 ? removeItem(product.product_id) : inc(product.product_id)}
+                                    disabled={soldOut}
+                                    p="sm"
+                                    style={(theme) => ({
+                                        position: "relative",
+                                        borderRadius: theme.radius.md,
+                                        border: `2px solid ${quantity > 0 ? theme.colors.teal[6] : theme.colors.gray[3]}`,
+                                        backgroundColor: soldOut
+                                            ? theme.colors.gray[1]
+                                            : quantity > 0
+                                                ? theme.colors.teal[0]
+                                                : theme.white,
+                                        opacity: soldOut ? 0.5 : 1,
+                                        textAlign: "center",
+                                    })}
+                                >
+                                    {quantity > 0 && (
+                                        <Badge
+                                            color="teal"
+                                            variant="filled"
+                                            radius="xl"
+                                            size="sm"
+                                            style={{ position: "absolute", top: 4, right: 4 }}
+                                        >
+                                            {quantity}x
+                                        </Badge>
+                                    )}
+                                    <Stack gap={2} align="center">
+                                        <Text size="xs" fw={600} ta="center">
+                                            {product.product_name}
+                                        </Text>
+                                        <Text size="xs" fw={700} c={soldOut ? "dimmed" : "teal"}>
+                                            {soldOut ? "Esgotado" : brl(product.sell_price)}
+                                        </Text>
+                                        {!soldOut && (
+                                            <Text size="10px" c="dimmed">
+                                                {stock[product.product_id]}u disponíveis
+                                            </Text>
                                         )}
-                                        <Stack gap={2} align="center">
-                                            <Text size="xs" fw={600} ta="center">
-                                                {product.product_name}
-                                            </Text>
-                                            <Text size="xs" fw={700} c={soldOut ? "dimmed" : "teal"}>
-                                                {soldOut ? "Esgotado" : brl(product.sell_price)}
-                                            </Text>
-                                            {!soldOut && (
-                                                <Text size="10px" c="dimmed">
-                                                    {stock[product.product_id]}u                                                </Text>
-                                            )}
-                                        </Stack>
-                                    </UnstyledButton>
-                                )
-                            })}
-                        </SimpleGrid>
-                    </Stack>
+                                    </Stack>
+                                </UnstyledButton>
+                            )
+                        })}
+                    </SimpleGrid>
+                </Stack>
 
-                    {isEmpty ? (
-                        <Center py="lg">
-                            <Stack align="center" gap="xs">
-                                <ThemeIcon variant="light" color="gray" size={40} radius="xl">
-                                    <ShoppingCart size={20} />
-                                </ThemeIcon>
-                                <Text c="dimmed" size="sm" ta="center">
-                                    Nenhum item ainda.
-                                </Text>
-                            </Stack>
-                        </Center>
-                    ) : (
+                {isEmpty ? (
+                    <Center style={{ flex: 1 }}>
+                        <Stack align="center" gap="xs">
+                            <ThemeIcon variant="light" color="gray" size={40} radius="xl">
+                                <ShoppingCart size={20} />
+                            </ThemeIcon>
+                            <Text c="dimmed" size="sm" ta="center">
+                                Nenhum item ainda.
+                            </Text>
+                        </Stack>
+                    </Center>
+                ) : (
+                    <ScrollArea type="scroll" style={{ flex: 1, minHeight: 0 }}>
                         <Stack gap={4}>
                             <Text size="xs" fw={600} tt="uppercase" c="dimmed" style={{ letterSpacing: 1 }}>
                                 No carrinho
@@ -149,9 +150,9 @@ export function CartScreen({
                                 )
                             })}
                         </Stack>
-                    )}
-                </Stack>
-            </ScrollArea>
+                    </ScrollArea>
+                )}
+            </Stack>
 
             {/* Footer */}
             <Stack gap="xs">
