@@ -1,6 +1,7 @@
 import {
     ActionIcon, Button, Group,
-    SimpleGrid, Stack, Text, Title, ScrollArea
+    SimpleGrid, Stack, Text, Title, ScrollArea,
+    Divider, Center
 } from "@mantine/core"
 import { Plus, Minus, ArrowLeft, Pencil } from "lucide-react"
 import { ScreenShell } from "@/components/ScreenShell"
@@ -80,12 +81,16 @@ export function CartScreen({
                     </SimpleGrid>
                 </Stack>
 
-                <ScrollArea type="scroll" style={{ flex: 1 }}>
-                    <Stack>
-                        {isEmpty ? (
-                            <Text ta="center">Nenhum item ainda.</Text>
-                        ) : (
-                            cartIterable.map(([productId, quantity]) => {
+                {isEmpty ? (
+                    <Center style={{ flex: 1 }}>
+                        <Text ta="center">
+                            Nenhum item ainda.
+                        </Text>
+                    </Center>
+                ) : (
+                    <ScrollArea type="scroll" style={{ flex: 1 }}>
+                        <Stack>
+                            {cartIterable.map(([productId, quantity]) => {
                                 const product = products.find(p => p.product_id === productId)
                                 if (!product) return null
                                 return (
@@ -99,14 +104,15 @@ export function CartScreen({
                                         <Text ta="right">{brl(quantity * product.sell_price)}</Text>
                                     </Group>
                                 )
-                            })
-                        )}
-                    </Stack>
-                </ScrollArea>
+                            })}
+                        </Stack>
+                    </ScrollArea>
+                )}
             </Stack>
 
             {/* Footer */}
             <Stack>
+                <Divider />
                 <Group justify="space-between">
                     <Text>Total</Text>
                     <Text>{brl(total)}</Text>
