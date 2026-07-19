@@ -1,6 +1,6 @@
 import {
-    ActionIcon, Button, Divider, Group, Paper,
-    SimpleGrid, Stack, Text, Title, ScrollArea, Flex
+    ActionIcon, Button, Group,
+    SimpleGrid, Stack, Text, Title, ScrollArea
 } from "@mantine/core"
 import { Plus, Minus, ArrowLeft, Pencil } from "lucide-react"
 import { ScreenShell } from "@/components/ScreenShell"
@@ -32,56 +32,56 @@ export function CartScreen({
 
     return (
         <ScreenShell>
-            {/* Main Flex Container to force Footer to the bottom */}
-            <Flex direction="column" h="calc(100svh - 70px)">
+            {/* Header */}
+            <Group justify="space-between">
+                <ActionIcon onClick={onBack}>
+                    <ArrowLeft />
+                </ActionIcon>
+                <Title order={1} size="h5">
+                    Venda de {salesman?.salesman_name}
+                </Title>
+                <ActionIcon onClick={onBack}>
+                    <Pencil size={18} />
+                </ActionIcon>
+            </Group>
 
-                {/* Header (Fixed) */}
-                <Group justify="space-between">
-                    <ActionIcon variant="subtle" onClick={onBack}>
-                        <ArrowLeft />
-                    </ActionIcon>
-                    <Title order={1} size="h5">Venda de {salesman?.salesman_name}</Title>
-                    <ActionIcon variant="subtle" onClick={onBack}>
-                        <Pencil size={18} />
-                    </ActionIcon>
-                </Group>
+            {/* Middle Section */}
+            <Stack style={{ flex: 1, minHeight: 0 }} py="xl">
+                <Stack>
+                    <Text>TOQUE PARA ADICIONAR</Text>
+                    <SimpleGrid cols={3}>
+                        {products.map((product) => {
+                            const available = availableFor(product.product_id)
+                            const soldOut = available !== undefined && available <= 0
+                            const quantity = cart[product.product_id] || 0
 
-                {/* Middle Section (Scrollable) */}
-                <Stack py="xl">
+                            return (
+                                <Button
+                                    key={product.product_id}
+                                    onClick={() => quantity > 0 ? removeItem(product.product_id) : inc(product.product_id)}
+                                    disabled={soldOut}
+                                    h="auto"
+                                    py="sm"
+                                >
+                                    <Stack gap={0} align="center">
+                                        <Text size="xs" ta="center">
+                                            {product.product_name}
+                                        </Text>
+                                        <Text size="xs" ta="center">
+                                            {soldOut ? "Esgotado" : brl(product.sell_price)}
+                                        </Text>
+                                        <Text size="xs" ta="center">
+                                            {soldOut ? "" : stock[product.product_id] + "u"}
+                                        </Text>
+                                    </Stack>
+                                </Button>
+                            )
+                        })}
+                    </SimpleGrid>
+                </Stack>
+
+                <ScrollArea type="scroll" style={{ flex: 1 }}>
                     <Stack>
-                        <Text>TOQUE PARA ADICIONAR</Text>
-                        <SimpleGrid cols={3}>
-                            {products.map((product) => {
-                                const available = availableFor(product.product_id)
-                                const soldOut = available !== undefined && available <= 0
-                                const quantity = cart[product.product_id] || 0
-
-                                return (
-                                    <Button
-                                        key={product.product_id}
-                                        onClick={() => quantity > 0 ? removeItem(product.product_id) : inc(product.product_id)}
-                                        disabled={soldOut}
-                                        h="auto"
-                                        py="sm"
-                                    >
-                                        <Stack gap={0} align="center">
-                                            <Text size="xs" ta="center">
-                                                {product.product_name}
-                                            </Text>
-                                            <Text size="xs" ta="center">
-                                                {soldOut ? "Esgotado" : brl(product.sell_price)}
-                                            </Text>
-                                            <Text size="xs" ta="center">
-                                                {soldOut ? "Esgotado" : stock[product.product_id] + "u"}
-                                            </Text>
-                                        </Stack>
-                                    </Button>
-                                )
-                            })}
-                        </SimpleGrid>
-                    </Stack>
-
-                    <Stack style={{ flex: 1 }} py="xl">
                         {isEmpty ? (
                             <Text ta="center">Nenhum item ainda.</Text>
                         ) : (
@@ -102,20 +102,19 @@ export function CartScreen({
                             })
                         )}
                     </Stack>
-                </Stack>
+                </ScrollArea>
+            </Stack>
 
-                {/* Footer (Fixed) */}
-                <Stack>
-                    <Divider />
-                    <Group justify="space-between">
-                        <Text>Total</Text>
-                        <Text>{brl(total)}</Text>
-                    </Group>
-                    <Button size="lg" disabled={total === 0} onClick={onNext}>
-                        Fechar venda
-                    </Button>
-                </Stack>
-            </Flex>
+            {/* Footer */}
+            <Stack>
+                <Group justify="space-between">
+                    <Text>Total</Text>
+                    <Text>{brl(total)}</Text>
+                </Group>
+                <Button size="lg" disabled={total === 0} onClick={onNext}>
+                    Fechar venda
+                </Button>
+            </Stack>
         </ScreenShell>
     )
 }
