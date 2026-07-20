@@ -4,7 +4,7 @@ import {
     Group, Paper, ScrollArea, SegmentedControl,
     Stack, Text, Title
 } from "@mantine/core"
-import { Check, Copy, ArrowLeft, AlertTriangle, QrCode, Banknote, CreditCard, MoreHorizontal } from "lucide-react"
+import { Check, ArrowLeft, AlertTriangle, QrCode, Banknote, CreditCard, MoreHorizontal } from "lucide-react"
 import { brl, buildQrGrid, QR_SIZE } from "@/helpers"
 import { ScreenShell } from "@/components/ScreenShell"
 import type { PaymentType } from "@/types"
