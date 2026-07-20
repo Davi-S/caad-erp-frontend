@@ -52,7 +52,7 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
             {/* Header */}
             <Stack gap={4}>
                 <Group justify="space-between">
-                    <ActionIcon onClick={onEdit} disabled={isLocked} variant="subtle" color="dark" size="lg">
+                    <ActionIcon onClick={onEdit} disabled={isLocked} variant="subtle" size="lg">
                         <ArrowLeft />
                     </ActionIcon>
                     <Button onClick={onCancel} disabled={isLocked} variant="subtle" color="red" size="compact-sm">
@@ -60,7 +60,7 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                     </Button>
                 </Group>
                 <Stack gap={0} align="center">
-                    <Text size="xs" fw={600} tt="uppercase" c="dimmed" style={{ letterSpacing: 1 }}>
+                    <Text size="xs" fw={600} tt="uppercase" c="dimmed" py="md" style={{ letterSpacing: 1 }}>
                         Recebendo pagamento
                     </Text>
                     <Title order={1} size="h5">
@@ -75,7 +75,7 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                     <Paper withBorder shadow="sm" radius="md" p="lg" mx="auto" w="100%" maw={360}>
                         <Stack align="center" gap="xs">
                             <Badge
-                                color={confirmed ? "teal" : "yellow"}
+                                color={confirmed ? "blue" : "yellow"}
                                 variant={confirmed ? "filled" : "light"}
                                 radius="xl"
                                 leftSection={confirmed ? <Check size={12} /> : undefined}
@@ -92,7 +92,7 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                                 value={method}
                                 onChange={(value) => setMethod(value as PaymentType)}
                                 disabled={isLocked}
-                                color="teal"
+                                color="blue"
                                 fullWidth
                                 mt="sm"
                                 styles={{
@@ -162,14 +162,13 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                 {!confirmed ? (
                     <Button
                         size="lg"
-                        color="teal"
                         onClick={() => onConfirm(method)}
                         loading={confirming}
                     >
                         Já recebi o pagamento
                     </Button>
                 ) : (
-                    <Button size="lg" variant="outline" color="teal" onClick={onNewSale}>
+                    <Button size="lg" onClick={onNewSale}>
                         Nova venda
                     </Button>
                 )}
