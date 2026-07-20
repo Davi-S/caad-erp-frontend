@@ -64,7 +64,7 @@ export function SalesmenScreen({
                                             </Group>
 
                                             {isSelected && (
-                                                <Check size={18} />
+                                                <Check size={18} color="teal" />
                                             )}
                                         </Group>
                                     </UnstyledButton>

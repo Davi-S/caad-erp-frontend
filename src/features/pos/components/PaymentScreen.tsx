@@ -52,7 +52,7 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
             {/* Header */}
             <Stack gap={4}>
                 <Group justify="space-between">
-                    <ActionIcon onClick={onEdit} disabled={isLocked} variant="subtle" size="lg">
+                    <ActionIcon onClick={onEdit} disabled={isLocked} variant="subtle" color="dark" size="lg">
                         <ArrowLeft />
                     </ActionIcon>
                     <Button onClick={onCancel} disabled={isLocked} variant="subtle" color="red" size="compact-sm">
@@ -79,7 +79,6 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                                 variant={confirmed ? "filled" : "light"}
                                 radius="xl"
                                 leftSection={confirmed ? <Check size={12} /> : undefined}
-                                style={confirmed ? { transform: "rotate(-6deg)" } : undefined}
                             >
                                 {confirmed ? "Pago" : "Aguardando pagamento"}
                             </Badge>

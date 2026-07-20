@@ -34,7 +34,7 @@ export function CartScreen({
         <ScreenShell>
             {/* Header */}
             <Group wrap="nowrap">
-                <ActionIcon onClick={onBack} variant="subtle" size="lg">
+                <ActionIcon onClick={onBack} variant="subtle" color="dark" size="lg">
                     <ArrowLeft />
                 </ActionIcon>
                 <Stack gap={0}>
