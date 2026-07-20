@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import {
     ActionIcon, Alert, Badge, Button, Center,
-    Group, Paper, ScrollArea, SegmentedControl,
-    Stack, Text, Title
+    Group, Paper, SegmentedControl,
+    Stack, Text, Title, Box
 } from "@mantine/core"
 import { PixCanvas } from "react-qrcode-pix"
 import { Check, ArrowLeft, AlertTriangle, QrCode, Banknote, CreditCard, MoreHorizontal } from "lucide-react"
@@ -76,10 +76,22 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
             </Stack>
 
             {/* Middle Section */}
-            <ScrollArea type="scroll" style={{ flex: 1, minHeight: 0 }}>
-                <Stack justify="center" style={{ minHeight: "100%" }} py="md">
-                    <Paper withBorder shadow="sm" radius="md" p="lg" mx="auto" w="100%" maw={360}>
-                        <Stack align="center" gap="xs">
+            <Box style={{ flex: 1, minHeight: 0, overflowY: "auto", display: "flex", flexDirection: "column" }} py="sm">
+                <Stack
+                    align="stretch"
+                    justify="center"
+                    style={{ flex: 1, minHeight: 0 }}
+                    mx="auto"
+                    w="100%"
+                >
+                    <Paper
+                        withBorder
+                        shadow="sm"
+                        radius="md"
+                        p="lg"
+                        style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}
+                    >
+                        <Stack align="center" gap="xs" style={{ flex: 1, minHeight: 0 }}>
                             <Badge
                                 color={confirmed ? "var(--mantine-primary-color-filled)" : "yellow"}
                                 variant={confirmed ? "filled" : "light"}
@@ -105,14 +117,28 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                                 }}
                             />
 
-                            <Paper withBorder radius="md" p="md" mt="sm" w="100%" mih={180} style={{ borderStyle: "dashed" }}>
-                                <Center style={{ flexDirection: "column", height: "100%" }}>
+                            {/* Detached absolute container to perfectly scale the canvas top-down */}
+                            <Paper
+                                withBorder
+                                radius="md"
+                                mt="sm"
+                                w="100%"
+                                style={{ borderStyle: "dashed", flex: 1, minHeight: 0, position: "relative" }}
+                            >
+                                <Center style={{ position: "absolute", top: 16, bottom: 16, left: 16, right: 16 }}>
                                     {method === "PIX" && (
                                         <PixCanvas
                                             pixkey={PIX_MERCHANT.pixkey}
                                             merchant={PIX_MERCHANT.merchant}
                                             city={PIX_MERCHANT.city}
-                                            amount={cartState.total/100}
+                                            amount={cartState.total / 100}
+                                            internalProps={{
+                                                style: {
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    objectFit: "contain"
+                                                }
+                                            }}
                                         />
                                     )}
 
@@ -139,15 +165,15 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                     </Paper>
 
                     {error && (
-                        <Alert color="red" icon={<AlertTriangle size={16} />} mx="auto" w="100%" maw={360}>
+                        <Alert color="red" icon={<AlertTriangle size={16} />} w="100%" mt="sm">
                             {error}
                         </Alert>
                     )}
                 </Stack>
-            </ScrollArea>
+            </Box>
 
             {/* Footer */}
-            <Stack mx="auto" w="100%" maw={360}>
+            <Stack mx="auto" w="100%">
                 {!confirmed ? (
                     <Button
                         size="lg"
