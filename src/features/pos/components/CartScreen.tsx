@@ -1,5 +1,5 @@
 import {
-    ActionIcon, Badge, Button, Center, Checkbox, Divider, Group,
+    ActionIcon, Indicator, Button, Center, Checkbox, Divider, Group,
     ScrollArea, SimpleGrid, Stack, Text, ThemeIcon, Title
 } from "@mantine/core"
 import { Plus, Minus, ArrowLeft, ShoppingCart } from "lucide-react"
@@ -60,43 +60,35 @@ export function CartScreen({
                             const quantity = cart[product.product_id] || 0
 
                             return (
-                                <Checkbox.Card
-                                    key={product.product_id}
-                                    checked={quantity > 0}
-                                    onClick={() => quantity > 0 ? removeItem(product.product_id) : inc(product.product_id)}
-                                    disabled={soldOut}
-                                    radius="md"
-                                    p="sm"
-                                    style={{
-                                        position: "relative",
-                                        textAlign: "center",
-                                        backgroundColor: soldOut ? "var(--mantine-color-gray-1)" : undefined,
-                                    }}
-                                >
-                                    {quantity > 0 && (
-                                        <Badge
-                                            variant="filled"
-                                            radius="xl"
-                                            size="sm"
-                                            style={{ position: "absolute", top: 4, right: 4 }}
-                                        >
-                                            {quantity}x
-                                        </Badge>
-                                    )}
-                                    <Stack gap={2} align="center">
-                                        <Text size="xs" fw={600} ta="center">
-                                            {product.product_name}
-                                        </Text>
-                                        <Text size="xs" fw={700} c={soldOut ? "dimmed" : "blue"}>
-                                            {soldOut ? "Esgotado" : brl(product.sell_price)}
-                                        </Text>
-                                        {!soldOut && (
-                                            <Text size="10px" c="dimmed">
-                                                {stock[product.product_id]}u disponíveis
+                                <Indicator label={`${quantity}x`} size={18} disabled={quantity === 0} offset={6}>
+                                    <Checkbox.Card
+                                        key={product.product_id}
+                                        checked={quantity > 0}
+                                        onClick={() => quantity > 0 ? removeItem(product.product_id) : inc(product.product_id)}
+                                        disabled={soldOut}
+                                        radius="md"
+                                        p="sm"
+                                        style={{
+                                            position: "relative",
+                                            textAlign: "center",
+                                            backgroundColor: soldOut ? "var(--mantine-color-gray-1)" : undefined,
+                                        }}
+                                    >
+                                        <Stack gap={2} align="center">
+                                            <Text size="xs" fw={600} ta="center">
+                                                {product.product_name}
                                             </Text>
-                                        )}
-                                    </Stack>
-                                </Checkbox.Card>
+                                            <Text size="xs" fw={700} c={soldOut ? "dimmed" : "blue"}>
+                                                {soldOut ? "Esgotado" : brl(product.sell_price)}
+                                            </Text>
+                                            {!soldOut && (
+                                                <Text size="10px" c="dimmed">
+                                                    {stock[product.product_id]}u disponíveis
+                                                </Text>
+                                            )}
+                                        </Stack>
+                                    </Checkbox.Card>
+                                </Indicator>
                             )
                         })}
                     </SimpleGrid>
