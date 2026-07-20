@@ -51,10 +51,9 @@ export function SalesmenScreen({
                                         value={salesman.salesman_id}
                                         radius="md"
                                         p="sm"
-                                        color="teal"
                                     >
                                         <Group wrap="nowrap">
-                                            <Radio.Indicator color="teal" />
+                                            <Radio.Indicator />
                                             <Text fw={600}>{salesman.salesman_name}</Text>
                                         </Group>
                                     </Radio.Card>
@@ -70,7 +69,6 @@ export function SalesmenScreen({
                 disabled={!selectedId}
                 onClick={() => selectedId && onNext(selectedId)}
                 size="lg"
-                color="teal"
             >
                 Começar venda
             </Button>
