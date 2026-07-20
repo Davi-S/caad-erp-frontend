@@ -1,9 +1,9 @@
-import { useState } from "react"
 import {
     Button, Center, Group,
-    ScrollArea, Stack, Text, ThemeIcon, Title, UnstyledButton
+    Radio, ScrollArea, Stack, Text, ThemeIcon, Title
 } from "@mantine/core"
-import { Check, Users } from "lucide-react"
+import { useState } from "react"
+import { Users } from "lucide-react"
 import { ScreenShell } from "@/components/ScreenShell"
 import type { Salesmen } from "@/types"
 
@@ -43,34 +43,24 @@ export function SalesmenScreen({
                     </Center>
                 ) : (
                     <ScrollArea type="scroll" style={{ flex: 1 }}>
-                        <Stack gap="sm">
-                            {active.map((salesman) => {
-                                const isSelected = selectedId === salesman.salesman_id
-                                return (
-                                    <UnstyledButton
+                        <Radio.Group value={selectedId ?? ""} onChange={(id) => setSelectedId(id)}>
+                            <Stack gap="sm">
+                                {active.map((salesman) => (
+                                    <Radio.Card
                                         key={salesman.salesman_id}
-                                        onClick={() => setSelectedId(salesman.salesman_id)}
+                                        value={salesman.salesman_id}
+                                        radius="md"
                                         p="sm"
-                                        style={(theme) => ({
-                                            borderRadius: theme.radius.md,
-                                            border: `2px solid ${isSelected ? theme.colors.teal[6] : theme.colors.gray[3]}`,
-                                            backgroundColor: isSelected ? theme.colors.teal[0] : theme.white,
-                                            transition: "border-color 120ms ease, background-color 120ms ease",
-                                        })}
+                                        color="teal"
                                     >
-                                        <Group justify="space-between" wrap="nowrap">
-                                            <Group wrap="nowrap" gap="sm">
-                                                <Text fw={600}>{salesman.salesman_name}</Text>
-                                            </Group>
-
-                                            {isSelected && (
-                                                <Check size={18} color="teal" />
-                                            )}
+                                        <Group wrap="nowrap">
+                                            <Radio.Indicator color="teal" />
+                                            <Text fw={600}>{salesman.salesman_name}</Text>
                                         </Group>
-                                    </UnstyledButton>
-                                )
-                            })}
-                        </Stack>
+                                    </Radio.Card>
+                                ))}
+                            </Stack>
+                        </Radio.Group>
                     </ScrollArea>
                 )}
             </Stack>
