@@ -119,15 +119,17 @@ export function CartScreen({
                                         {index > 0 && <Divider variant="dashed" my={4} />}
                                         <Group justify="space-between" wrap="nowrap">
                                             <Text size="sm" style={{ flex: 1 }}>{product.product_name}</Text>
-                                            <Group gap={4} wrap="nowrap">
+                                            <ActionIcon.Group>
                                                 <ActionIcon variant="light" size="sm" onClick={() => dec(productId)}>
                                                     <Minus size={12} />
                                                 </ActionIcon>
-                                                <Text size="sm" w={20} ta="center">{quantity}</Text>
+                                                <ActionIcon.GroupSection variant="light" size="sm" >
+                                                    {quantity}
+                                                </ActionIcon.GroupSection>
                                                 <ActionIcon variant="light" size="sm" onClick={() => inc(productId)}>
                                                     <Plus size={12} />
                                                 </ActionIcon>
-                                            </Group>
+                                            </ActionIcon.Group>
                                             <Text size="sm" fw={600} ff="monospace" w={72} ta="right">
                                                 {brl(quantity * product.sell_price)}
                                             </Text>
