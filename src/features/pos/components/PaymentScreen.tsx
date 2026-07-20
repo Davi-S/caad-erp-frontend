@@ -92,7 +92,7 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                                 value={method}
                                 onChange={(value) => setMethod(value as PaymentType)}
                                 disabled={isLocked}
-                                fullWidth
+                                color="var(--mantine-primary-color-filled)"
                                 mt="sm"
                                 styles={{
                                     root: { display: "grid", gridTemplateColumns: `repeat(${METHOD_OPTIONS.length}, 1fr)` },
