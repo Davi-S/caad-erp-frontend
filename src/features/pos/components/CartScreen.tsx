@@ -1,6 +1,6 @@
 import {
-    ActionIcon, Badge, Button, Center, Divider, Group,
-    ScrollArea, SimpleGrid, Stack, Text, ThemeIcon, Title, UnstyledButton
+    ActionIcon, Badge, Button, Center, Checkbox, Divider, Group,
+    ScrollArea, SimpleGrid, Stack, Text, ThemeIcon, Title
 } from "@mantine/core"
 import { Plus, Minus, ArrowLeft, ShoppingCart } from "lucide-react"
 import { ScreenShell } from "@/components/ScreenShell"
@@ -34,7 +34,7 @@ export function CartScreen({
         <ScreenShell>
             {/* Header */}
             <Group wrap="nowrap">
-                <ActionIcon onClick={onBack} variant="subtle" color="dark" size="lg">
+                <ActionIcon onClick={onBack} variant="subtle" size="lg">
                     <ArrowLeft />
                 </ActionIcon>
                 <Stack gap={0}>
@@ -60,27 +60,21 @@ export function CartScreen({
                             const quantity = cart[product.product_id] || 0
 
                             return (
-                                <UnstyledButton
+                                <Checkbox.Card
                                     key={product.product_id}
+                                    checked={quantity > 0}
                                     onClick={() => quantity > 0 ? removeItem(product.product_id) : inc(product.product_id)}
                                     disabled={soldOut}
+                                    radius="md"
                                     p="sm"
-                                    style={(theme) => ({
+                                    style={{
                                         position: "relative",
-                                        borderRadius: theme.radius.md,
-                                        border: `2px solid ${quantity > 0 ? theme.colors.teal[6] : theme.colors.gray[3]}`,
-                                        backgroundColor: soldOut
-                                            ? theme.colors.gray[1]
-                                            : quantity > 0
-                                                ? theme.colors.teal[0]
-                                                : theme.white,
-                                        opacity: soldOut ? 0.5 : 1,
                                         textAlign: "center",
-                                    })}
+                                        backgroundColor: soldOut ? "var(--mantine-color-gray-1)" : undefined,
+                                    }}
                                 >
                                     {quantity > 0 && (
                                         <Badge
-                                            color="teal"
                                             variant="filled"
                                             radius="xl"
                                             size="sm"
@@ -93,7 +87,7 @@ export function CartScreen({
                                         <Text size="xs" fw={600} ta="center">
                                             {product.product_name}
                                         </Text>
-                                        <Text size="xs" fw={700} c={soldOut ? "dimmed" : "teal"}>
+                                        <Text size="xs" fw={700} c={soldOut ? "dimmed" : "blue"}>
                                             {soldOut ? "Esgotado" : brl(product.sell_price)}
                                         </Text>
                                         {!soldOut && (
@@ -102,7 +96,7 @@ export function CartScreen({
                                             </Text>
                                         )}
                                     </Stack>
-                                </UnstyledButton>
+                                </Checkbox.Card>
                             )
                         })}
                     </SimpleGrid>
@@ -134,11 +128,11 @@ export function CartScreen({
                                         <Group justify="space-between" wrap="nowrap">
                                             <Text size="sm" style={{ flex: 1 }}>{product.product_name}</Text>
                                             <Group gap={4} wrap="nowrap">
-                                                <ActionIcon variant="light" color="teal" size="sm" onClick={() => dec(productId)}>
+                                                <ActionIcon variant="light" size="sm" onClick={() => dec(productId)}>
                                                     <Minus size={12} />
                                                 </ActionIcon>
                                                 <Text size="sm" w={20} ta="center">{quantity}</Text>
-                                                <ActionIcon variant="light" color="teal" size="sm" onClick={() => inc(productId)}>
+                                                <ActionIcon variant="light" size="sm" onClick={() => inc(productId)}>
                                                     <Plus size={12} />
                                                 </ActionIcon>
                                             </Group>
@@ -161,7 +155,7 @@ export function CartScreen({
                     <Text fw={600}>Total</Text>
                     <Text fw={700} size="lg" ff="monospace">{brl(total)}</Text>
                 </Group>
-                <Button size="lg" color="teal" disabled={total === 0} onClick={onNext}>
+                <Button size="lg" disabled={total === 0} onClick={onNext}>
                     Fechar venda
                 </Button>
             </Stack>
