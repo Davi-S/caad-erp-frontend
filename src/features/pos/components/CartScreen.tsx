@@ -78,7 +78,7 @@ export function CartScreen({
                                             <Text size="xs" fw={600} ta="center">
                                                 {product.product_name}
                                             </Text>
-                                            <Text size="xs" fw={700} c={soldOut ? "dimmed" : "blue"}>
+                                            <Text size="xs" fw={700} c={soldOut ? "dimmed" : "var(--mantine-primary-color-filled)"}>
                                                 {soldOut ? "Esgotado" : brl(product.sell_price)}
                                             </Text>
                                             {!soldOut && (

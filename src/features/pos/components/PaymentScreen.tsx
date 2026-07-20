@@ -75,7 +75,7 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                     <Paper withBorder shadow="sm" radius="md" p="lg" mx="auto" w="100%" maw={360}>
                         <Stack align="center" gap="xs">
                             <Badge
-                                color={confirmed ? "blue" : "yellow"}
+                                color={confirmed ? "var(--mantine-primary-color-filled)" : "yellow"}
                                 variant={confirmed ? "filled" : "light"}
                                 radius="xl"
                                 leftSection={confirmed ? <Check size={12} /> : undefined}
@@ -92,7 +92,6 @@ export function PaymentScreen({ salesman, cartState, checkoutState, actions }: P
                                 value={method}
                                 onChange={(value) => setMethod(value as PaymentType)}
                                 disabled={isLocked}
-                                color="blue"
                                 fullWidth
                                 mt="sm"
                                 styles={{
