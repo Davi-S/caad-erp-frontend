@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         path: "/salesmen",
         element: <SalesmenManagementPage />,
         loader: async () => {
-            await queryClient.ensureQueryData(salesmenQueryOptions(false))
+            await queryClient.ensureQueryData(salesmenQueryOptions())
             return null
         },
         errorElement: <GlobalError />
