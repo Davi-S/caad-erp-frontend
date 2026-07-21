@@ -12,7 +12,11 @@ import type { Salesman } from "@/types"
 
 export function SalesmenManagementPage() {
     const [showInactive, setShowInactive] = useState(false)
-    const { data: salesmen, isLoading, isError } = useSalesmen(showInactive)
+    const { data: salesmen, isLoading, isError } = useSalesmen()
+    // Filter the salesmen on the client side
+    const filteredSalesmen = showInactive
+        ? salesmen
+        : salesmen?.filter(salesman => salesman.is_active)
 
     const [modalOpened, setModalOpened] = useState(false)
     const [editingSalesman, setEditingSalesman] = useState<Salesman | null>(null)
@@ -82,7 +86,7 @@ export function SalesmenManagementPage() {
                     <Center style={{ flex: 1 }}>
                         <Text c="dimmed" size="sm">Carregando...</Text>
                     </Center>
-                ) : !salesmen || salesmen.length === 0 ? (
+                ) : !filteredSalesmen || filteredSalesmen.length === 0 ? (
                     <Center style={{ flex: 1 }}>
                         <Stack align="center" gap="xs">
                             <ThemeIcon variant="light" color="gray" size={40} radius="xl">
@@ -98,7 +102,7 @@ export function SalesmenManagementPage() {
                 ) : (
                     <ScrollArea type="scroll" style={{ flex: 1, minHeight: 0 }}>
                         <Stack gap="xs">
-                            {salesmen.map((salesman) => (
+                            {filteredSalesmen.map((salesman) => (
                                 <Group
                                     key={salesman.salesman_id}
                                     justify="space-between"
