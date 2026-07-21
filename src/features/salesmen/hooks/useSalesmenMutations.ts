@@ -1,9 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { api } from "@/api/apiClient"
-import type { Schemas } from "@/api/apiClient"
+import type { SalesmanCreateRequest, SalesmanUpdateRequest } from "@/types"
 
-type SalesmanCreateInput = Schemas["SalesmanCreateRequest"]
-type SalesmanUpdateInput = Schemas["SalesmanUpdateRequest"]
 
 function extractErrorMessage(error: unknown, fallback: string): string {
     if (error && typeof error === "object" && "detail" in error && typeof (error as { detail: unknown }).detail === "string") {
@@ -16,7 +14,7 @@ export function useCreateSalesman() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async (input: SalesmanCreateInput) => {
+        mutationFn: async (input: SalesmanCreateRequest) => {
             const res = await api.POST("/salesmen", { body: input })
             if (res.error) throw new Error(extractErrorMessage(res.error, "Falha ao criar vendedor."))
             return res.data
@@ -31,7 +29,7 @@ export function useUpdateSalesman() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ salesmanId, input }: { salesmanId: string; input: SalesmanUpdateInput }) => {
+        mutationFn: async ({ salesmanId, input }: { salesmanId: string; input: SalesmanUpdateRequest }) => {
             const res = await api.PATCH("/salesmen/{salesman_id}", {
                 params: { path: { salesman_id: salesmanId } },
                 body: input
